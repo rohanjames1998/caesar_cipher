@@ -89,14 +89,7 @@ def caesar_cipher(string, shift)
     end
         
 
-    
-    
-    
-    
-    
-    
-    
-    binding.pry
+    cipher = shifted_letters.join("")
 end
 
 

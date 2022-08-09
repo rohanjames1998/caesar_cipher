@@ -36,17 +36,25 @@ def caesar_cipher(string, shift)
     
     letters = string.downcase.split('') #Letters lowercased so we can get their positions easily
     
-    # Getting indices of characters that are upcase
-    upcase_characters_indices = []
-    original_letters.each_with_index do |letter, index|
-        if /[A-Z]/.match(letter)
-            upcase_characters_indices << index
+    # Getting indices of characters that are upcase and spaces so that we can add those in same place in the ciphered string
+    upcase_indices = []
+    space_indices = []
+
+    # For upcases
+    original_letters.each_with_index do |ele, index|
+        if /[A-Z]/.match(ele)
+            upcase_indices << index
         end
     end
-        
-        
-        
-        
+
+    # For spaces
+    original_letters.each_with_index do |ele, index|
+        if /\s/.match(ele)
+            space_indices << index
+        end
+    end
+
+
         # Getting letters' positions in numbers
         letter_places = []
     letters.each do |letter| 
@@ -70,8 +78,13 @@ def caesar_cipher(string, shift)
     # Getting shifted letters from alphabets hash
     shifted_letters = alphabets.fetch_values(*shifted_places)
 
+    # Adding space for the cipher if any
+    space_indices.each do |index|
+        shifted_letters.insert(index, " ")
+    end
+
     # Changing letter casing if it was a upcase letter in the original string.
-    upcase_characters_indices.each do |index|
+    upcase_indices.each do |index|
         shifted_letters[index] = shifted_letters[index].upcase
     end
         

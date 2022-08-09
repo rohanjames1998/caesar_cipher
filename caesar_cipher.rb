@@ -52,11 +52,20 @@ def caesar_cipher(string, shift)
             letter += shift
         end
     end
-   binding.pry
-
+    
+    shifted_letters = alphabets.fetch_values(*shifted_places) #getting values from alphabets after shifting them numerically
+    
+    
+    
+    
+    
+    
+    
+    
+    binding.pry
 end
 
 
 
 
-caesar_cipher("Hello", 5)
+caesar_cipher("Hellz", 5)

@@ -44,8 +44,15 @@ def caesar_cipher(string, shift)
         end
     end
 
-
-   
+    shifted_places = letter_places.map do |letter|
+        if letter + shift > 26
+            dif = 26 - letter # Difference between letter and z so we can subtract it from shift in order to  get the number we need to get shifted place of the letter from a.
+            letter = shift - dif
+        else
+            letter += shift
+        end
+    end
+   binding.pry
 
 end
 

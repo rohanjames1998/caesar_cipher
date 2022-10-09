@@ -1,34 +1,34 @@
 class CaesarCipher
 
-def decrypt(string, shift)
-  alphabets = {
-    1 => "a",
-    2 => "b",
-    3 => "c",
-    4 => "d",
-    5 => "e",
-    6 => "f",
-    7 => "g",
-    8 => "h",
-    9 => "i",
-    10 => "j",
-    11 => "k",
-    12 => "l",
-    13 => "m",
-    14 => "n",
-    15 => "o",
-    16 => "p",
-    17 => "q",
-    18 => "r",
-    19 => "s",
-    20 => "t",
-    21 => "u",
-    22 => "v",
-    23 => "w",
-    24 => "x",
-    25 => "y",
-    26 => "z",
-  }
+def encrypt(string, shift)
+  # alphabets = {
+  #   1 => "a",
+  #   2 => "b",
+  #   3 => "c",
+  #   4 => "d",
+  #   5 => "e",
+  #   6 => "f",
+  #   7 => "g",
+  #   8 => "h",
+  #   9 => "i",
+  #   10 => "j",
+  #   11 => "k",
+  #   12 => "l",
+  #   13 => "m",
+  #   14 => "n",
+  #   15 => "o",
+  #   16 => "p",
+  #   17 => "q",
+  #   18 => "r",
+  #   19 => "s",
+  #   20 => "t",
+  #   21 => "u",
+  #   22 => "v",
+  #   23 => "w",
+  #   24 => "x",
+  #   25 => "y",
+  #   26 => "z",
+  # }
 
   original_letters = string.split('')
 
@@ -56,26 +56,27 @@ def decrypt(string, shift)
   # Getting letters' positions in numbers
   letter_places = []
   letters.each do |letter|
-    alphabets.each do |key, value|
-      if value == letter
-        letter_places << key
-      end
+    if /[a-z]/.match(letter)
+    letter_places << letter.ord
     end
   end
 
   # Getting letters' shifted positions
   shifted_places = letter_places.map do |letter|
-    if letter + shift > 26
-      dif = 26 - letter # Difference between letter and z so we can subtract it from shift
+    if letter + shift > 122
+      dif = 122 - letter # Difference between letter and z so we can subtract it from shift
       # in order to  get the number we need to get shifted place of the letter from a (or 1).
-      letter = shift - dif
+      letter = 96 + (shift - dif)
     else
       letter += shift
     end
   end
 
   # Getting shifted letters from alphabets hash
-  shifted_letters = alphabets.fetch_values(*shifted_places)
+  shifted_letters = []
+  shifted_places.each do |ascii|
+    shifted_letters << ascii.chr
+  end
 
   # Adding space for the cipher if any
   space_indices.each do |index|
@@ -87,5 +88,10 @@ def decrypt(string, shift)
     shifted_letters[index] = shifted_letters[index].upcase
   end
 
-  cipher = shifted_letters.join("")
+  cypher = shifted_letters.join("")
 end
+
+end
+
+cypher = CaesarCipher.new
+cypher.encrypt("What a string!", 5)

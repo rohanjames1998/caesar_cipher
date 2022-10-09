@@ -1,4 +1,6 @@
-def caesar_cipher(string, shift)
+class CaesarCipher
+
+def decrypt(string, shift)
   alphabets = {
     1 => "a",
     2 => "b",
@@ -32,7 +34,8 @@ def caesar_cipher(string, shift)
 
   letters = string.downcase.split('') # Letters lowercased so we can get their positions easily
 
-  # Getting indices of characters that are upcase and spaces so that we can add those in same place in the ciphered string
+  # Getting indices of characters that are upcase and spaces so that we can add
+  # those in same place in the ciphered string
   upcase_indices = []
   space_indices = []
 
@@ -63,7 +66,8 @@ def caesar_cipher(string, shift)
   # Getting letters' shifted positions
   shifted_places = letter_places.map do |letter|
     if letter + shift > 26
-      dif = 26 - letter # Difference between letter and z so we can subtract it from shift in order to  get the number we need to get shifted place of the letter from a (or 1).
+      dif = 26 - letter # Difference between letter and z so we can subtract it from shift
+      # in order to  get the number we need to get shifted place of the letter from a (or 1).
       letter = shift - dif
     else
       letter += shift

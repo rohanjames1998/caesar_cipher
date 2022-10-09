@@ -36,28 +36,37 @@ def encrypt(string, shift)
 
   # Getting indices of characters that are upcase and spaces so that we can add
   # those in same place in the ciphered string
-  upcase_indices = []
-  space_indices = []
+  # upcase_indices = []
+  # space_indices = []
 
-  # For upcases
-  original_letters.each_with_index do |ele, index|
-    if /[A-Z]/.match(ele)
-      upcase_indices << index
-    end
-  end
+  # # For upcases
+  # original_letters.each_with_index do |ele, index|
+  #   if /[A-Z]/.match(ele)
+  #     upcase_indices << index
+  #   end
+  # end
 
-  # For spaces
-  original_letters.each_with_index do |ele, index|
-    if /\s/.match(ele)
-      space_indices << index
-    end
-  end
+  # # For spaces
+  # original_letters.each_with_index do |ele, index|
+  #   if /\s/.match(ele)
+  #     space_indices << index
+  #   end
+  # end
 
   # Getting letters' positions in numbers
   letter_places = []
   letters.each do |letter|
     if /[a-z]/.match(letter)
     letter_places << letter.ord
+    end
+  end
+
+  special_char_indices = {}
+  original_letters.each_with_index do |chr, index|
+    if /[A-Z]/.match(chr)
+      special_char_indices[index] = 'U'
+    elsif !/[A-Za-z]/.match(chr)
+      special_char_indices[index] = chr
     end
   end
 
@@ -78,20 +87,28 @@ def encrypt(string, shift)
     shifted_letters << ascii.chr
   end
 
-  # Adding space for the cipher if any
-  space_indices.each do |index|
-    shifted_letters.insert(index, " ")
+  # # Adding space for the cypher if any
+  # space_indices.each do |index|
+  #   shifted_letters.insert(index, " ")
+  # end
+
+  # # Changing letter casing if it was a upcase letter in the original string.
+  # upcase_indices.each do |index|
+  #   shifted_letters[index] = shifted_letters[index].upcase
+  # end
+
+  special_char_indices.each do |k, v|
+    if v == 'U'
+      shifted_letters[k].upcase!
+    else
+    shifted_letters.insert(k, v)
+    end
   end
 
-  # Changing letter casing if it was a upcase letter in the original string.
-  upcase_indices.each do |index|
-    shifted_letters[index] = shifted_letters[index].upcase
-  end
-
-  cypher = shifted_letters.join("")
+    cypher = shifted_letters.join("")
 end
 
 end
 
 cypher = CaesarCipher.new
-cypher.encrypt("What a string!", 5)
+puts cypher.encrypt("What a string!", 5)
